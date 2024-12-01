@@ -10,47 +10,38 @@ fun main() {
     println("Part #2:" + part2(inputLines))
 }
 
-fun part1(inputLines: List<String>): Number {
+fun part1(inputLines: List<String>): Int {
     val leftList = ArrayList<Int>();
     val rightList = ArrayList<Int>();
 
-    for (inputLine in inputLines) {
-        val input = inputLine.split("   ")
-
-        leftList.add(input[0].toInt())
-        rightList.add(input[1].toInt())
+    inputLines
+        .map { inputLine -> inputLine.split("   ") }
+        .forEach { input ->
+            leftList.add(input[0].toInt())
+            rightList.add(input[1].toInt())
     }
 
     val sortedLeftList = leftList.sorted();
     val sortedRightList = rightList.sorted();
-    var result = 0;
 
-    for ((index, left) in sortedLeftList.withIndex()) {
-        result += abs(left - sortedRightList[index])
-    }
-
-    return result
+    return sortedLeftList.foldIndexed(0) { index, acc, item -> acc + abs(item - sortedRightList[index]) }
 }
 
 fun part2(inputLines: List<String>): Number {
     val leftList = ArrayList<Int>();
     val rightMap = mutableMapOf<Int, Int>();
-    var result = 0;
 
-    for (inputLine in inputLines) {
-        val input = inputLine.split("   ")
-        val x = input[0].toInt();
-        val y = input[1].toInt();
+    inputLines
+        .map { inputLine -> inputLine.split("   ") }
+        .forEach { input ->
+            val x = input[0].toInt();
+            val y = input[1].toInt();
 
-        leftList.add(x)
-        rightMap[y] = rightMap[y]?.plus(1) ?: 1
-    }
+            leftList.add(x)
+            rightMap[y] = rightMap[y]?.plus(1) ?: 1
+        }
 
-    for (left in leftList) {
-        result += rightMap[left]?.times(left) ?: 0
-    }
-
-    return result
+    return leftList.fold(0) { acc, item -> acc + (rightMap[item]?.times(item) ?: 0) }
 }
 
 
