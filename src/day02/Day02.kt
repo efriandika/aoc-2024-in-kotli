@@ -14,7 +14,7 @@ fun part1(inputLines: List<String>): Int {
 }
 
 fun part2(inputLines: List<String>): Int {
-    return inputLines.map { it.split(" ") }.count { isSafeWithDampener(it) }
+    return inputLines.count { isSafeWithDampener(it.split(' ')) }
 }
 
 fun isSafeWithDampener(values: List<String>): Boolean {
